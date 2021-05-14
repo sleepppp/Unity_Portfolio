@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StartCamera
   m_EditorClassIdentifier: 
   Distance: 2
-  TargetHeight: 1.33
+  TargetHeight: 0.7
   PitchValue: 11.1
   YawValue: 180

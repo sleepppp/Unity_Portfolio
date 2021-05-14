@@ -19,6 +19,19 @@ namespace KSW
 
         public event Action<float> EventZoomInOut;
 
+        public event Action<float> EventFadeOut;
+        public event Action<float> EventFadeIn;
+
+        public event Action<Character, Transform> EventCreateHUD;
+        public event Action<Character> EventRemoveHUD;
+
+        public event Action<Character, Transform,Action<InteractionHUD>> EventCreateInteractionHUD;
+        public event Action<Character> EventRemoveInteractionHUD;
+
+        public event Action<NPC> EventPlayDialog;
+
+        public event Action EventEndDialog;
+
         public void OnEventStartStickDrag(Vector2 dir, float value)
         {
             EventStartStickDrag?.Invoke(dir, value);
@@ -47,6 +60,46 @@ namespace KSW
         public void OnEventZoomInOut(float value)
         {
             EventZoomInOut?.Invoke(value);
+        }
+
+        public void OnEventFadeOut(float time)
+        {
+            EventFadeOut?.Invoke(time);
+        }
+
+        public void OnEventFadeIn(float time)
+        {
+            EventFadeIn?.Invoke(time);
+        }
+
+        public void OnEventCreateHUD(Character character,Transform hudPoint)
+        {
+            EventCreateHUD?.Invoke(character, hudPoint);
+        }
+
+        public void  OnEventRemoveHUD(Character character)
+        {
+            EventRemoveHUD?.Invoke(character);
+        }
+
+        public void OnEventCreateInteractionHUD(Character character, Transform hudPoint, Action<InteractionHUD> notifyEvent)
+        {
+            EventCreateInteractionHUD?.Invoke(character, hudPoint, notifyEvent);
+        }
+
+        public void OnEventRemoveInteractionHUD(Character character)
+        {
+            EventRemoveInteractionHUD?.Invoke(character);
+        }
+
+        public void OnEventPlayDialog(NPC npc)
+        {
+            EventPlayDialog?.Invoke(npc);
+        }
+
+        public void OnEventEndDialog()
+        {
+            EventEndDialog?.Invoke();
         }
     }
 }

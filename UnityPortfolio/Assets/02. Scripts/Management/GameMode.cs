@@ -25,7 +25,7 @@ namespace KSW
 
             m_playerController.SetTarget(m_playerObject);
 
-
+            GameEvent.instance.OnEventFadeIn(3f);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace KSW
 {
@@ -9,11 +10,13 @@ namespace KSW
     {
         protected Canvas m_myCanvas;
         protected Camera m_uiCamera;
+        protected RectTransform m_rectTransform;
 
         protected virtual void Start()
         {
             m_myCanvas = transform.FindComponentByParent<Canvas>();
             m_uiCamera = m_myCanvas.worldCamera;
+            m_rectTransform = transform as RectTransform;
         }
 
         //Camera overlay Canvas를 사용할 경우 컴포넌트 들은 해당 함수를 통해 좌표를 변경해서 사용해야 합니다. 

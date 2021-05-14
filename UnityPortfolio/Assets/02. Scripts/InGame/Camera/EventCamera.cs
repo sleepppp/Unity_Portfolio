@@ -8,7 +8,7 @@ namespace KSW
     public class EventCamera : MonoBehaviour
     {
         // =========================================================================
-        public event Action EventEndEvent;
+        event Action EventEndEvent;
         // =========================================================================
         Vector3 m_targetPosition;
         Vector3 m_startPosition;
@@ -38,22 +38,29 @@ namespace KSW
                 }
                 else
                 {
-                    transform.position = Vector3.Slerp(m_startPosition, m_targetPosition, ratio);
+                    transform.position = Vector3.Lerp(m_startPosition, m_targetPosition, ratio);
                     transform.rotation = Quaternion.Slerp(m_startRotation, m_targetRotation, ratio);
                 }
             }
         }
         // =========================================================================
-        public void PlayEvent(float durationTime, Vector3 targetPostion, Quaternion targetRotation)
+        public void PlayEvent(float durationTime, Vector3 targetPostion, Quaternion targetRotation, Action[] notify)
         {
             m_durationTime = durationTime;
             m_targetPosition = targetPostion;
             m_targetRotation = targetRotation;
+            m_startPosition = transform.position;
+            m_startRotation = transform.rotation;
             m_currentTime = 0f;
             m_isPlay = true;
+
+            for(int i =0; i < notify.Length; ++i)
+            {
+                EventEndEvent += notify[i];
+            }
         }
         // =========================================================================
-        public void ReverseEvent()
+        public void ReverseEvent(Action[] notify)
         {
             m_currentTime = 0f;
 
@@ -66,6 +73,11 @@ namespace KSW
             m_startRotation = tempRotation;
 
             m_isPlay = true;
+
+            for (int i = 0; i < notify.Length; ++i)
+            {
+                EventEndEvent += notify[i];
+            }
         }
     }
 }

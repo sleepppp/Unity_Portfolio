@@ -24,20 +24,52 @@ namespace KSW
             // }}
         }
         // =========================================================================
-        public void PlayEvent(float duration , Vector3 targetPoint, Quaternion targetRotation)
+        public void PlayEvent(float duration , Vector3 targetPoint, Quaternion targetRotation,Action notify)
         {
-            m_eventCamera.PlayEvent(duration, targetPoint, targetRotation);
-            m_eventCamera.EventEndEvent += OnEventEndEvent;
+            Action[] arr;
+            if (notify != null)
+            {
+                arr = new Action[2];
+                arr[0] = OnEventEndEvent;
+                arr[1] = notify;
+            }
+            else
+            {
+                arr = new Action[1];
+                arr[0] = OnEventEndEvent;
+            }
+
+            m_eventCamera.PlayEvent(duration, targetPoint, targetRotation,arr);
+            //m_eventCamera.EventEndEvent += OnEventEndEvent;
             m_thirdPersonCamera.isPlay = false;
         }
         // =========================================================================
-        public void ReverseEvent()
+        public void ReverseEvent(Action notify)
         {
-            m_eventCamera.ReverseEvent();
+            Action[] arr;
+            if (notify != null)
+            {
+                arr = new Action[2];
+                arr[0] = OnEventEndReverseEvent;
+                arr[1] = notify;
+            }
+            else
+            {
+                arr = new Action[1];
+                arr[0] = OnEventEndReverseEvent;
+            }
+            
+           m_eventCamera.ReverseEvent(arr);
             m_thirdPersonCamera.isPlay = false;
         }
         // =========================================================================
         void OnEventEndEvent()
+        {
+            //m_thirdPersonCamera.isPlay = true;
+        }
+
+        // =========================================================================
+        void OnEventEndReverseEvent()
         {
             m_thirdPersonCamera.isPlay = true;
         }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace KSW
 {
-    [RequireComponent(typeof(Rigidbody)/*,typeof(NavMeshAgent)*/,typeof(Animator))]
+    [RequireComponent(typeof(Rigidbody),typeof(NavMeshAgent),typeof(Animator))]
     public class Character : MovementObject
     {
         // =========================================================================
@@ -14,7 +14,10 @@ namespace KSW
         public enum State : int
         {
             Idle = 0,
-            Move = 1
+            Move = 1,
+            Skill0 = 2,
+            Skill1 = 3,
+            SKill2 = 4
         }
 
         public enum MoveType : int
@@ -24,11 +27,18 @@ namespace KSW
             NavMeshAgent = 1
         }
         // =========================================================================
+
         protected Rigidbody m_rigidbody;
         protected NavMeshAgent m_navMeshAgent;
         protected Animator m_animator;
         protected State m_state;
         protected MoveType m_moveType;
+        [Header("Character")]
+        [SerializeField] protected string m_name;
+
+        protected Transform m_hudPoint;
+
+        public string characterName { get { return m_name; } }
         // =========================================================================
         protected virtual void Start()
         {
@@ -36,9 +46,13 @@ namespace KSW
             m_navMeshAgent = GetComponent<NavMeshAgent>();
             m_animator = GetComponent<Animator>();
 
+            m_hudPoint = transform.Find("HUDPoint");
+
             m_state = State.Idle;
             m_navMeshAgent.speed = m_moveSpeed;
             m_navMeshAgent.enabled = false;
+
+            GameEvent.instance.OnEventCreateHUD(this, m_hudPoint);
         }
         // =========================================================================
         protected virtual void Update()

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace KSW
 {
-    //Stick입력 처리는 해당 스크립트가 처리합니다 
+    //Stick입력 처리는 해당 스크립트가 처리합니다   q
     public class PanelJoystick : UIBase, IPointerDownHandler,IDragHandler,IPointerUpHandler
     {
         [SerializeField] float m_maxDistance = 100f;

@@ -20,26 +20,32 @@ namespace KSW
 
         void Update()
         {
-            int currentTouchCount = Mathf.Clamp(Input.touchCount, 0, 2);
-            if(currentTouchCount != m_lastTouchCount)
-            {
-               if(currentTouchCount == 2)
-               {
-                    Touch[] arrTouch = Input.touches;
-                    m_lastTouchDistance = Vector3.Distance(arrTouch[0].position, arrTouch[1].position);
-                }
-               else if(currentTouchCount == 1)
-                {
-                    m_lastTouchDistance = 0f;
-                }
-            }
+#if UNITY_EDITOR
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-            if(currentTouchCount == 2)
-            {
-                Touch[] arrTouch = Input.touches;
-                float distance = Vector3.Distance(arrTouch[0].position, arrTouch[1].position);
-                OnZoomInOut(distance - m_lastTouchDistance);
-            }
+            GameEvent.instance.OnEventZoomInOut(-scroll);
+#else
+            //int currentTouchCount = Mathf.Clamp(Input.touchCount, 0, 2);
+            //if(currentTouchCount != m_lastTouchCount)
+            //{
+            //   if(currentTouchCount == 2)
+            //   {
+            //        Touch[] arrTouch = Input.touches;
+            //        m_lastTouchDistance = Vector3.Distance(arrTouch[0].position, arrTouch[1].position);
+            //    }
+            //   else if(currentTouchCount == 1)
+            //    {
+            //        m_lastTouchDistance = 0f;
+            //    }
+            //}
+            //
+            //if(currentTouchCount == 2)
+            //{
+            //    Touch[] arrTouch = Input.touches;
+            //    float distance = Vector3.Distance(arrTouch[0].position, arrTouch[1].position);
+            //    OnZoomInOut(distance - m_lastTouchDistance);
+            //}
+#endif
         }
 
         public void OnPointerDown(PointerEventData eventData)

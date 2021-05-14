@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DefaultCamera
   m_EditorClassIdentifier: 
   Distance: 8
-  TargetHeight: 1
+  TargetHeight: 0
   PitchValue: 45
   YawValue: 45

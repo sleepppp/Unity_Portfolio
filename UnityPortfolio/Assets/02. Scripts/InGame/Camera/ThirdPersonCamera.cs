@@ -14,7 +14,6 @@ namespace KSW
         [SerializeField] float m_targetHeight;
         [SerializeField] float m_pitchValue;
         [SerializeField] float m_yawValue;
-
         bool m_isPlay = true;
         float m_stickDragTime = 0f;
 
@@ -84,6 +83,7 @@ namespace KSW
             if (m_isPlay == false)
                 return;
             m_distance += value;
+            m_distance = Mathf.Clamp(m_distance, 3.5f, 8f);
         }
         // =========================================================================
         public void SetValues(CameraScriptableObject value)
@@ -141,7 +141,7 @@ namespace KSW
                 return;
 
             m_stickDragTime += Time.deltaTime;
-            if(m_stickDragTime >= 1f && m_coroutineInterpoltate == null)
+            if(m_stickDragTime >= 0.5f && m_coroutineInterpoltate == null)
             {
                 InterpolateToDefaultSetting();
                 m_stickDragTime = float.MinValue;
