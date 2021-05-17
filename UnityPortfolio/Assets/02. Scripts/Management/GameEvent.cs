@@ -32,6 +32,16 @@ namespace KSW
 
         public event Action EventEndDialog;
 
+        public event Action EventHideHUD;
+        public event Action EventShowHUD;
+
+        public event Action EventPlayAutoPlay;
+        public event Action EventStopAutoPlay;
+
+        public event Action<GameState> EventChangeGameState;
+
+        public event Action<string, float, bool> EventNotice;
+
         public void OnEventStartStickDrag(Vector2 dir, float value)
         {
             EventStartStickDrag?.Invoke(dir, value);
@@ -100,6 +110,36 @@ namespace KSW
         public void OnEventEndDialog()
         {
             EventEndDialog?.Invoke();
+        }
+
+        public void OnEventHideHUD()
+        {
+            EventHideHUD?.Invoke();
+        }
+
+        public void OnEventShowHUD()
+        {
+            EventShowHUD?.Invoke();
+        }
+       
+        public void OnEventPlayAutoPlay()
+        {
+            EventPlayAutoPlay?.Invoke();
+        }
+
+        public void OnEventStopAutoPlay()
+        {
+            EventStopAutoPlay?.Invoke();
+        }
+
+        public void OnEventChangeGameState(GameState newState)
+        {
+            EventChangeGameState?.Invoke(newState);
+        }
+
+        public void OnEventNotice(string text, float time, bool ignoreOverlap)
+        {
+            EventNotice?.Invoke(text, time, ignoreOverlap);
         }
     }
 }

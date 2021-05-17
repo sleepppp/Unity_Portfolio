@@ -1,0 +1,4 @@
+ID	Dialog
+0	Hello. Welcome to unity world.
+1	My name is Rin.
+2	Please enjoy this game.

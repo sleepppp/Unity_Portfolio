@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//에디터용 테스트 로더입니다. 
-public class TestLoader : MonoBehaviour
+namespace KSW
 {
-    [SerializeField] string m_loadSceneName;
-
-    private void Awake()
+    //에디터용 테스트 로더입니다. 
+    public class TestLoader : MonoBehaviour
     {
-        SceneManager.LoadScene(m_loadSceneName, LoadSceneMode.Additive);      
+        [SerializeField] string m_loadSceneName;
+
+        private void Awake()
+        {
+            SceneManager.LoadScene(m_loadSceneName, LoadSceneMode.Additive);
+            GameManager gameManager = GameManager.instance;     //강제 생성
+        }
     }
 }

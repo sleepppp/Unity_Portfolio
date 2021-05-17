@@ -17,7 +17,7 @@ namespace KSW
             EventStateEnter?.Invoke(stateInfo, layerIndex);
         }
 
-        public override void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateIK(animator, stateInfo, layerIndex);
 

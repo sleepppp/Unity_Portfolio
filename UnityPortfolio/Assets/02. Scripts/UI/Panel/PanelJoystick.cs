@@ -6,15 +6,18 @@ using UnityEngine.EventSystems;
 
 namespace KSW
 {
-    //Stick입력 처리는 해당 스크립트가 처리합니다   q
+    //Stick입력 처리는 해당 스크립트가 처리합니다 
     public class PanelJoystick : UIBase, IPointerDownHandler,IDragHandler,IPointerUpHandler
     {
         [SerializeField] float m_maxDistance = 100f;
 
         RectTransform m_origin;
         Image m_stickImage;
-
+        Image m_autoPlayImage;
         bool m_isDown = false;
+
+        float m_lastTouchTime;
+        float m_autoPlayInterval = 0.5f;
 
         protected override void Start()
         {
@@ -22,6 +25,7 @@ namespace KSW
 
             m_origin = transform.Find("Origin") as RectTransform;
             m_stickImage = transform.Find("Stick").GetComponent<Image>();
+            m_autoPlayImage = transform.Find("Stick/AutoPlay").GetComponent<Image>();
         }
 
         void Update()
@@ -67,11 +71,23 @@ namespace KSW
             GetStickInfo(out dir, out value);
 
             GameEvent.instance.OnEventStartStickDrag(dir, value);
+
+            if (m_autoPlayImage.gameObject.activeInHierarchy == false)
+            {
+                if (Time.time - m_lastTouchTime <= m_autoPlayInterval)
+                {
+                    PlayAutoPlay();
+                }
+                m_lastTouchTime = Time.time;
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             SetStickPosition(eventData.position);
+
+            if(m_autoPlayImage.gameObject.activeInHierarchy == true)
+                StopAutoPlay();
         }
         public void OnPointerUp(PointerEventData eventData)
         {
@@ -79,6 +95,18 @@ namespace KSW
             m_isDown = false;
 
             GameEvent.instance.OnEventEndStickDrag();
+        }
+
+        public void PlayAutoPlay()
+        {
+            m_autoPlayImage.gameObject.SetActive(true);
+            GameEvent.instance.OnEventPlayAutoPlay();
+        }
+
+        public void StopAutoPlay()
+        {
+            m_autoPlayImage.gameObject.SetActive(false);
+            GameEvent.instance.OnEventStopAutoPlay();
         }
     }
 }

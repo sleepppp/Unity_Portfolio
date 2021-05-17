@@ -8,13 +8,16 @@ namespace KSW
     public class CameraController : MonoBehaviour
     {
         // =========================================================================
-        public event Action EventEndEvent;
-        // =========================================================================
         ThirdPersonCamera m_thirdPersonCamera;
         EventCamera m_eventCamera;
+        Camera m_camera;
+
+        public Camera camera { get { return m_camera; } }
+
         // =========================================================================
         private void Start()
         {
+            m_camera = GetComponent<Camera>();
             m_thirdPersonCamera = GetComponent<ThirdPersonCamera>();
             m_eventCamera = GetComponent<EventCamera>();
 
@@ -72,6 +75,22 @@ namespace KSW
         void OnEventEndReverseEvent()
         {
             m_thirdPersonCamera.isPlay = true;
+        }
+
+        // =========================================================================
+        public void RemovePlayerLayerInCullingMask()
+        {
+            int layerMask = m_camera.cullingMask;
+            layerMask -= 1 << LayerMask.NameToLayer("Player");
+            m_camera.cullingMask = layerMask;
+        }
+
+        // =========================================================================
+        public void AddPlayerLayerInCullingMask()
+        {
+            int layerMask = m_camera.cullingMask;
+            layerMask += 1 << LayerMask.NameToLayer("Player");
+            m_camera.cullingMask = layerMask;
         }
     }
 }

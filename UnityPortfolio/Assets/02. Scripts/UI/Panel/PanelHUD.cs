@@ -16,6 +16,8 @@ namespace KSW
 
             GameEvent.instance.EventCreateHUD += OnEventCreateHUD;
             GameEvent.instance.EventRemoveHUD += OnEventRemoveHUD;
+            GameEvent.instance.EventShowHUD += OnEventShowHUD;
+            GameEvent.instance.EventHideHUD += OnEventHideHUD;
 
             m_prefabHUD = Resources.Load("Prefabs/UI/HUD") as GameObject;
         }
@@ -24,6 +26,8 @@ namespace KSW
         {
             GameEvent.instance.EventCreateHUD -= OnEventCreateHUD;
             GameEvent.instance.EventRemoveHUD -= OnEventRemoveHUD;
+            GameEvent.instance.EventShowHUD -= OnEventShowHUD;
+            GameEvent.instance.EventHideHUD -= OnEventHideHUD;
         }
 
         void OnEventCreateHUD(Character character,Transform hudPoint)
@@ -64,6 +68,22 @@ namespace KSW
             }
 
             return false;
+        }
+
+        void OnEventHideHUD()
+        {
+            for(int i =0; i < m_hudList.Count; ++i)
+            {
+                m_hudList[i].gameObject.SetActive(false);
+            }
+        }
+
+        void OnEventShowHUD()
+        {
+            for (int i = 0; i < m_hudList.Count; ++i)
+            {
+                m_hudList[i].gameObject.SetActive(true);
+            }
         }
     }
 }

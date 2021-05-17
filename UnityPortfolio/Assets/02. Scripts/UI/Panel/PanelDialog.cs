@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace KSW
 {
-    public struct DialogData
+    public struct DialogStruct
     {
         public string Name;
         public string Dialog;
@@ -19,7 +19,7 @@ namespace KSW
 
         int m_currentDualogIndex = 0;
 
-        List<DialogData> m_dialogList = new List<DialogData>();
+        List<DialogStruct> m_dialogList = new List<DialogStruct>();
 
         protected override void Start()
         {
@@ -43,15 +43,23 @@ namespace KSW
 
         void OnStartDialog(NPC npc)
         {
-            // Test 용 다이어로그
-            DialogData[] list = new DialogData[1];
-            list[0].Dialog = "Hello Welcome To UnityWorld";
-            list[0].Name = npc.characterName;
+            int[] arrDialogID = npc.dialogID;
+            DialogStruct[] dialogList = new DialogStruct[arrDialogID.Length];
+            for(int i =0; i < arrDialogID.Length; ++i)
+            {
+                DialogData data = GameData.instance.GetDialogDataInID(arrDialogID[i]);
+                if(data == null)
+                {
+                    Debug.LogError("NPC::OnStartDialog::Can't Load Dialog Data");
+                }
+                dialogList[i].Name = npc.characterName;
+                dialogList[i].Dialog = data.Dialog;
+            }
 
-            OnStartDialog(list);
+            OnStartDialog(dialogList);
         }
 
-        void OnStartDialog(DialogData[] dialogList)
+        void OnStartDialog(DialogStruct[] dialogList)
         {
             m_dialogList.AddRange(dialogList);
 
@@ -69,12 +77,23 @@ namespace KSW
             StartCoroutine(CoroutineEndDialog());
         }
 
+        void SetDialog(DialogStruct data)
+        {
+            m_nameText.text = data.Name;
+            m_dialogText.text = data.Dialog;
+        }
+
         void OnEventNextDialog()
         {
             m_currentDualogIndex++;
-            if(m_currentDualogIndex >= m_dialogList.Count)
+  
+            if (m_currentDualogIndex >= m_dialogList.Count)
             {
                 OnEndDialog();
+            }
+            else
+            {
+                SetDialog(m_dialogList[m_currentDualogIndex]);
             }
         }
 
@@ -84,7 +103,9 @@ namespace KSW
             yield return new WaitForSeconds(0.8f);
             GameEvent.instance.OnEventFadeIn(0.8f);
             GameEvent.instance.OnEventEndDialog();
+            GameEvent.instance.OnEventShowHUD();
             GameManager.instance.gameMode.mainCamera.GetComponent<CameraController>().ReverseEvent(null);
+            GameManager.instance.gameMode.mainCamera.GetComponent<CameraController>().RemovePlayerLayerInCullingMask();
         }
     }
 }

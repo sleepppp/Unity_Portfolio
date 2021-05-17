@@ -12,6 +12,9 @@ namespace KSW
 
         public void Start()
         {
+            GameData.instance.Init();
+            QuestManager.instance.Init();
+
             m_gameMode = FindObjectOfType<GameMode>();
         }
     }

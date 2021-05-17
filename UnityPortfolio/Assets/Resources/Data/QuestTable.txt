@@ -1,0 +1,2 @@
+ID	Name	Description	LimitTime	NextID	ClassName
+1	First Talk	First Talk With Rin	0	2	QuestFirstTalkWithRin

@@ -8,9 +8,9 @@ namespace KSW
     //UI로부터 조종 관련 InGame 입력 처리는 이곳으로 들어옵니다. 
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField]protected MovementObject m_controlTarget;
+        [SerializeField]protected PlayerCharacter m_controlTarget;
 
-        public MovementObject controlTarget { get { return m_controlTarget; } }
+        public PlayerCharacter controlTarget { get { return m_controlTarget; } }
 
         protected virtual void OnEnable()
         {
@@ -48,6 +48,9 @@ namespace KSW
             if (m_controlTarget == null)
                 return;
 
+            if (value <= 0.2f)
+                return;
+
             Vector3 worldDir = ConvertStickInfoByCamera(dir);
             m_controlTarget.Move(worldDir);
         }
@@ -76,7 +79,7 @@ namespace KSW
             }
         }
 
-        public void SetTarget(MovementObject target)
+        public void SetTarget(PlayerCharacter target)
         {
             m_controlTarget = target;
             m_controlTarget.SetOwner(this);
