@@ -42,6 +42,9 @@ namespace KSW
 
         public event Action<string, float, bool> EventNotice;
 
+        public event Action<MailInfo> EventArriveMail;
+        public event Action<MailInfo> EventRemoveMail;
+
         public void OnEventStartStickDrag(Vector2 dir, float value)
         {
             EventStartStickDrag?.Invoke(dir, value);
@@ -140,6 +143,16 @@ namespace KSW
         public void OnEventNotice(string text, float time, bool ignoreOverlap)
         {
             EventNotice?.Invoke(text, time, ignoreOverlap);
+        }
+
+        public void OnEventArriveMail(MailInfo info)
+        {
+            EventArriveMail?.Invoke(info);
+        }
+
+        public void OnEventRemoveMail(MailInfo info)
+        {
+            EventRemoveMail?.Invoke(info);
         }
     }
 }

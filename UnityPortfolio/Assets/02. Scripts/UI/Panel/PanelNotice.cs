@@ -88,6 +88,8 @@ namespace KSW
 
         public void OnAnimEventChangeText()
         {
+            if (m_noticeList.Count == 0)
+                return;
             NoticeInfo currentInfo = m_noticeList.Peek();
             m_text.text = currentInfo.Text;
         }

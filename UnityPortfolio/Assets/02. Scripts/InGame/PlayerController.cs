@@ -10,6 +10,8 @@ namespace KSW
     {
         [SerializeField]protected PlayerCharacter m_controlTarget;
 
+        Queue<ICharacterCommand> m_commandList = new Queue<ICharacterCommand>();
+
         public PlayerCharacter controlTarget { get { return m_controlTarget; } }
 
         protected virtual void OnEnable()

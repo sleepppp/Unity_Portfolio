@@ -10,6 +10,9 @@ namespace KSW
     {
         // =========================================================================
         protected static readonly int _animHashMainState = Animator.StringToHash("MainState");
+        static readonly int _animHashSkill0 = Animator.StringToHash("Skill0");
+        static readonly int _animHashSkill1 = Animator.StringToHash("Skill1");
+        static readonly int _animHashSkill2 = Animator.StringToHash("Skill2");
         // =========================================================================
         public enum State : int
         {
@@ -17,7 +20,7 @@ namespace KSW
             Move = 1,
             Skill0 = 2,
             Skill1 = 3,
-            SKill2 = 4
+            Skill2 = 4
         }
 
         public enum MoveType : int
@@ -105,6 +108,19 @@ namespace KSW
 
             m_state = state;
             SetAnimMainState((int)m_state);
+
+            switch(m_state)
+            {
+                case State.Skill0:
+                    m_animator.SetTrigger(_animHashSkill0);
+                    break;
+                case State.Skill1:
+                    m_animator.SetTrigger(_animHashSkill1);
+                    break;
+                case State.Skill2:
+                    m_animator.SetTrigger(_animHashSkill2);
+                    break;
+            }
         }
         // =========================================================================
         void SetAnimMainState(int state)
@@ -150,6 +166,13 @@ namespace KSW
 
             return true;
         }
+
         // =========================================================================
+        public void OnAnimEventSkillEnd()
+        {
+            m_animator.ResetTrigger(_animHashSkill0);
+            m_animator.ResetTrigger(_animHashSkill1);
+            m_animator.ResetTrigger(_animHashSkill2);
+        }
     }
 }

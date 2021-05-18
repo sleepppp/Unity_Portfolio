@@ -58,6 +58,14 @@ namespace KSW
             m_isSucceeded = true;
             GameEvent.instance.EventPlayDialog -= OnEventPlayDialog;
             GameEvent.instance.OnEventNotice("퀘스트 : " +  m_data.Name + " 성공!", 3f, false);
+
+            //TODO 서버가 없어서 우선 테스트 용으로 처리
+            MailInfo mail = new MailInfo();
+            mail.Name = "katana";
+            mail.Description = "Item Katana";
+            mail.RewardItemID = 0;
+            Mail.instance.AddMail(mail);
+            //GameEvent.instance.OnEventArriveMail(mail);
         }
     }
 }

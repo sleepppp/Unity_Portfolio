@@ -18,9 +18,6 @@ namespace KSW
         {
             base.Start();
 
-            GameEvent.instance.EventPlayAutoPlay += OnEventPlayAutoBattle;
-            GameEvent.instance.EventStopAutoPlay += OnEventStopAutoBattle;
-
             StateBehaviour[] arrBehaviour = m_animator.GetBehaviours<StateBehaviour>();
             for(int i =0; i < arrBehaviour.Length; ++i)
             {
@@ -29,12 +26,6 @@ namespace KSW
             }
 
             m_equipment = GetComponent<CharacterEquipment>();
-        }
-
-        private void OnDestroy()
-        {
-            GameEvent.instance.EventPlayAutoPlay -= OnEventPlayAutoBattle;
-            GameEvent.instance.EventStopAutoPlay -= OnEventStopAutoBattle;
         }
 
         public void ChangeBattleMode(bool bBattle)
@@ -50,16 +41,6 @@ namespace KSW
 
             m_isBattleMode = bBattle;
             m_animator.SetBool(_animHashIsBattleMode, m_isBattleMode);
-        }
-
-        void OnEventPlayAutoBattle()
-        {
-            ChangeBattleMode(true);
-        }
-
-        void OnEventStopAutoBattle()
-        {
-            ChangeBattleMode(false);
         }
 
         void OnAnimStateEnter(AnimatorStateInfo stateInfo, int layer)
@@ -86,6 +67,20 @@ namespace KSW
                 return true;
 
             return false;
+        }
+
+        // =========================================================================
+        public void OnAnimEventChangeJointToRightHand()
+        {
+            Transform mainWeapon = m_equipment.mainWeapon;
+            m_equipment.Equipped(m_equipment.rightHandJoint, mainWeapon, true);
+        }
+
+        // =========================================================================
+        public void OnAnimEventChangeJointToBack()
+        {
+            Transform mainWeapon = m_equipment.mainWeapon;
+            m_equipment.Equipped(m_equipment.backJoint, mainWeapon, true);
         }
     }
 

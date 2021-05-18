@@ -35,6 +35,9 @@ namespace KSW
 
         private void Update()
         {
+            Vector3 pos = new Vector3();
+            pos += new Vector3(0, 0, 1) * 100 * Time.deltaTime;
+
             for(int i =0; i < m_executeList.Count; ++i)
             {
                 m_executeList[i].Update();
