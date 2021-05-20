@@ -28,17 +28,13 @@ namespace KSW
         public bool isFail { get { return m_isFail; } }
         public bool isSucceeded { get { return m_isSucceeded; } }
 
-        public QuestBase()
-        {
-      
-        }
         public abstract void Start();
         public abstract void Update();
     }
 
     public class QuestFirstTalkWithRin : QuestBase
     {
-        public QuestFirstTalkWithRin() :base()
+        public QuestFirstTalkWithRin() : base()
         {
 
         }
