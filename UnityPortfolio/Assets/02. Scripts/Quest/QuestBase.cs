@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace KSW
+namespace MyCore
 {
     [TSVReader.Data("ID")]
     public class QuestData

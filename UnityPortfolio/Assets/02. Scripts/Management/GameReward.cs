@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSW
+namespace MyCore
 {
     public class GameReward : MonobehaviourSingleton<GameReward>
     {
@@ -20,6 +20,11 @@ namespace KSW
 
             GameEvent.instance.OnEventNotice("Katana를 손에 넣었다", 2f, false);
 
+            SkillData skill = GameData.instance.skillData[1];
+            PlayerCharacter character = GameManager.instance.gameMode.playerObject ;
+            character.AddSkill(skill);
+
+            GameEvent.instance.OnEventNotice("Default Attck Skill을 손에 넣었다", 2f, false);
         }
     }
 }

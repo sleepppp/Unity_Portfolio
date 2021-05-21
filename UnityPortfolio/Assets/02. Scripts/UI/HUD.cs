@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace KSW
+namespace MyCore
 {
     public struct HUDInfo
     {

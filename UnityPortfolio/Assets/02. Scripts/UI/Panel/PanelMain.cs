@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-namespace KSW
+namespace MyCore
 {
     public class PanelMain : UIBase
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-namespace KSW
+namespace MyCore
 {
     public class CustomButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

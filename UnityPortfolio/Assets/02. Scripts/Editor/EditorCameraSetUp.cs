@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using KSW;
+using MyCore;
 
 public static class EditorCameraSetUp
 {

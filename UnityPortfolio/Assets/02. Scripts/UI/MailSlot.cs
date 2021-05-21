@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace KSW
+namespace MyCore
 {
     public class MailSlot : MonoBehaviour
     {
@@ -24,7 +24,7 @@ namespace KSW
             m_titleText.text = m_info.Name;
             m_dateText.text = System.DateTime.Now.ToString("MM-dd");
 
-            transform.Find("Background").GetComponent<CustomButton>().EventUp += OnButtonUp;
+            transform.Find("Background").GetComponent<Button>().onClick.AddListener(OnButtonUp);
         }
 
         void OnButtonUp()

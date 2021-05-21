@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace KSW
+namespace MyCore
 {
     //에디터용 테스트 로더입니다. 
     public class TestLoader : MonoBehaviour

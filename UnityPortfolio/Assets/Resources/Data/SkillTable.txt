@@ -1,0 +1,2 @@
+ID	Name	ClassName	SpritePath	CoolTime	AttackRange
+1	DefaultAttack	SkillDefaultAttack	UISource/SkillIcon/1-Battle-Roar	1	1

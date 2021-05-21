@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-namespace KSW
+namespace MyCore
 {
     //모든 UI의 베이스가 되는 스크립트 입니다.
     public class UIBase : MonoBehaviour

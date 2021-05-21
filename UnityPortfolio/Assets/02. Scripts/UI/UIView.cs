@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSW
+namespace MyCore
 {
     public abstract class UIView : UIBase
     {

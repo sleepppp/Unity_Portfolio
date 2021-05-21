@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSW
+namespace MyCore
 {
     //static 오브젝트를 제외한 오브젝트는 해당 오브젝트를 상속 받습니다.
     //MovementObject 를 상속받은 오브젝트는 PalyerController로부터 Input을 받을 수 있습니다. 
@@ -70,7 +70,7 @@ namespace KSW
         {
             m_owner = owner;
         }
-
+        // =========================================================================
         public virtual bool CanMove()
         {
             if (m_movementStatic == false)
@@ -78,11 +78,11 @@ namespace KSW
 
             return false;
         }
-        
+        // =========================================================================
         public void SetMovementStatic(bool bStatic)
         {
             m_movementStatic = bStatic;
-            Debug.Log("MovementObject::SetMovementStatic : " + bStatic);
+            //Debug.Log("MovementObject::SetMovementStatic : " + bStatic);
         }
     }
 }

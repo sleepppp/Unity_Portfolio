@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace KSW
+namespace MyCore
 {
     //화면 터치 및 드래깅, 줌인 줌아웃은 이곳에서 처리합니다.
     public class PanelTouchScreen : MonoBehaviour, IPointerDownHandler,IDragHandler, IPointerUpHandler

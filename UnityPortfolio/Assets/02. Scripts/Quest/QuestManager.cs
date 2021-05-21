@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 
-namespace KSW
+namespace MyCore
 {
     public class QuestManager : MonobehaviourSingleton<QuestManager>
     {
@@ -12,14 +12,14 @@ namespace KSW
 
         public void Init()
         {
-            Dictionary<int, QuestData> questDatas = GameData.instance.questDatas;
+            Dictionary<int, QuestData> questDatas = GameData.instance.questData;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
-            string ksw = "KSW.";
+            string MyCore = "MyCore.";
             foreach (KeyValuePair<int,QuestData> item in questDatas)
             {
                 QuestBase questBase =
-                  assembly.CreateInstance(ksw + item.Value.ClassName) as QuestBase;
+                  assembly.CreateInstance(MyCore + item.Value.ClassName) as QuestBase;
                 questBase.data = item.Value;
 
                 m_questList.Add(item.Value.ID, questBase);

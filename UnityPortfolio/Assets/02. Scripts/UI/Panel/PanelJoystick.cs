@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace KSW
+namespace MyCore
 {
     //Stick입력 처리는 해당 스크립트가 처리합니다 
     public class PanelJoystick : UIBase, IPointerDownHandler,IDragHandler,IPointerUpHandler
@@ -99,8 +99,9 @@ namespace KSW
 
         public void PlayAutoPlay()
         {
-            m_autoPlayImage.gameObject.SetActive(true);
-            GameEvent.instance.OnEventPlayAutoPlay();
+            bool result = GameEvent.instance.OnEventPlayAutoPlay();
+            if(result)
+                m_autoPlayImage.gameObject.SetActive(true);
         }
 
         public void StopAutoPlay()

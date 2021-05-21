@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace KSW
+namespace MyCore
 {
     [RequireComponent(typeof(Rigidbody),typeof(NavMeshAgent),typeof(Animator))]
     public class Character : MovementObject

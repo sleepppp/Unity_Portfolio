@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSW
+namespace MyCore
 {
     public enum GameState
     {
@@ -21,9 +21,12 @@ namespace KSW
         [SerializeField] protected Camera m_mainCamera;
         GameState m_gameState;
 
+        List<Enemy> m_enemyList = new List<Enemy>();
+
         public PlayerController playerContoller { get { return m_playerController; } }
-        public MovementObject playerObject { get { return m_playerObject; } }
+        public PlayerCharacter playerObject { get { return m_playerObject; } }
         public Camera mainCamera { get { return m_mainCamera; } }
+        public List<Enemy> enemyList { get { return m_enemyList; } }
 
         public GameState gameState { get { return m_gameState; } }
 
@@ -34,11 +37,13 @@ namespace KSW
             if (m_mainCamera == null)
                 m_mainCamera = Camera.main;
 
+            m_enemyList.AddRange(FindObjectsOfType<Enemy>());
+
             m_playerController.SetTarget(m_playerObject);
 
             GameEvent.instance.OnEventFadeIn(3f);
-
             m_gameState = GameState.Normal;
+            GameEvent.instance.EventDeadEnemy += OnEventDeadEnemy;
         }
 
         public void ChangeGameState(GameState newState)
@@ -55,6 +60,11 @@ namespace KSW
                 return false;
 
             return true;
+        }
+
+        public void OnEventDeadEnemy(Enemy enemy)
+        {
+            m_enemyList.Remove(enemy);
         }
     }
 }

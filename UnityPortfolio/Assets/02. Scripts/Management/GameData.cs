@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TSVReader;
 
-namespace KSW
+namespace MyCore
 {
     public class GameData : Singleton<GameData>
     {
         List<DialogData> m_dialogDatas;
-        Dictionary<int,QuestData> m_questDatas;
+        Dictionary<int,QuestData> m_questData;
+        Dictionary<int, SkillData> m_skillData;
 
-        public Dictionary<int, QuestData> questDatas { get { return m_questDatas; } }
+        public Dictionary<int, QuestData> questData { get { return m_questData; } }
+        public Dictionary<int,SkillData> skillData { get { return m_skillData; } }
 
         public void Init()
         {
             LoadDialogData();
             LoadQuestData();
-
-            System.GC.Collect();
+            LoadSkillData();
         }
 
         void LoadDialogData()
@@ -29,7 +30,13 @@ namespace KSW
         void LoadQuestData()
         {
             Table table = TSVReader.Reader.ReadTSVToTable("Data/QuestTable");
-            m_questDatas = table.TableToDictionary<int, QuestData>();
+            m_questData = table.TableToDictionary<int, QuestData>();
+        }
+
+        void LoadSkillData()
+        {
+            Table table = TSVReader.Reader.ReadTSVToTable("Data/SkillTable");
+            m_skillData = table.TableToDictionary<int, SkillData>();
         }
 
         public DialogData GetDialogDataInID(int id)

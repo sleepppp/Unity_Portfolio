@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSW
+namespace MyCore
 {
     //일반 싱글톤
     public class Singleton<T> where T : class, new()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KSW
+namespace MyCore
 {
     //UI를 제외한 InGame Input관련 처리는 이곳에서 받습니다. 
     //UI로부터 조종 관련 InGame 입력 처리는 이곳으로 들어옵니다. 
@@ -10,7 +10,7 @@ namespace KSW
     {
         [SerializeField]protected PlayerCharacter m_controlTarget;
 
-        Queue<ICharacterCommand> m_commandList = new Queue<ICharacterCommand>();
+        //Queue<ICharacterCommand> m_commandList = new Queue<ICharacterCommand>();
 
         public PlayerCharacter controlTarget { get { return m_controlTarget; } }
 
@@ -30,6 +30,8 @@ namespace KSW
             GameEvent.instance.EventUpdateStickDrag += OnEventUpdateStickDrag;
             GameEvent.instance.EventEndStickDrag += OnEventEndStickDrag;
             GameEvent.instance.EventTouchWorld += OnEventTouchWorld;
+            GameEvent.instance.EventPlayAutoPlay += OnEventPlayAutoPlay;
+            GameEvent.instance.EventStopAutoPlay += OnEventStopAutoPlay;
         }
 
         void UnBindInput()
@@ -38,6 +40,26 @@ namespace KSW
             GameEvent.instance.EventUpdateStickDrag -= OnEventUpdateStickDrag;
             GameEvent.instance.EventEndStickDrag -= OnEventEndStickDrag;
             GameEvent.instance.EventTouchWorld -= OnEventTouchWorld;
+            GameEvent.instance.EventPlayAutoPlay -= OnEventPlayAutoPlay;
+            GameEvent.instance.EventStopAutoPlay -= OnEventStopAutoPlay;
+        }
+
+        bool OnEventPlayAutoPlay()
+        {
+            if (m_controlTarget.IsEquippedWeapon() == false)
+            {
+                GameEvent.instance.OnEventNotice("무기가 없어 배틀모드로 진입할 수 없습니다", 2f, true);
+                return false;
+            }
+
+            m_controlTarget.ChangeBattleMode(true);
+
+            return true;
+        }
+
+        void OnEventStopAutoPlay()
+        {
+            m_controlTarget.ChangeBattleMode(false);
         }
         
         void OnEventStartStickDrag(Vector2 dir, float value)

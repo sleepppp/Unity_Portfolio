@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace KSW
+namespace MyCore
 {
     //게임에서 발생하는 이벤트들은 해당 클래스를 통해서 전달됩니다. 
     //UI <-> GameEvent <-> InGame
@@ -35,15 +35,19 @@ namespace KSW
         public event Action EventHideHUD;
         public event Action EventShowHUD;
 
-        public event Action EventPlayAutoPlay;
-        public event Action EventStopAutoPlay;
-
         public event Action<GameState> EventChangeGameState;
 
         public event Action<string, float, bool> EventNotice;
 
         public event Action<MailInfo> EventArriveMail;
         public event Action<MailInfo> EventRemoveMail;
+
+        public event Action<Enemy> EventDeadEnemy;
+
+        public event Action<SkillData> EventBindSkill;
+
+        public event Func<bool> EventPlayAutoPlay;
+        public event Action EventStopAutoPlay;
 
         public void OnEventStartStickDrag(Vector2 dir, float value)
         {
@@ -125,9 +129,11 @@ namespace KSW
             EventShowHUD?.Invoke();
         }
        
-        public void OnEventPlayAutoPlay()
+        public bool OnEventPlayAutoPlay()
         {
-            EventPlayAutoPlay?.Invoke();
+            if (EventPlayAutoPlay != null)
+                return EventPlayAutoPlay();
+            return false;
         }
 
         public void OnEventStopAutoPlay()
@@ -153,6 +159,16 @@ namespace KSW
         public void OnEventRemoveMail(MailInfo info)
         {
             EventRemoveMail?.Invoke(info);
+        }
+
+        public void OnEventDeadEnemy(Enemy enemy)
+        {
+            EventDeadEnemy?.Invoke(enemy);
+        }
+
+        public void OnEventBindSkill(SkillData data)
+        {
+            EventBindSkill?.Invoke(data);
         }
     }
 }

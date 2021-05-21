@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-namespace KSW
+namespace MyCore
 {
-    public class PlayerCharacter : Character
+    public class PlayerCharacter : BattleCharacter
     {
         static readonly int _animHashIsBattleMode = Animator.StringToHash("IsBattleMode");
         static readonly string _changeToBattleMode = "ChangeToBattleMode";
@@ -13,6 +14,14 @@ namespace KSW
         protected bool m_isBattleMode;
 
         CharacterEquipment m_equipment;
+
+        BattleCharacter m_target;
+
+        [SerializeField] float m_detectionRange = 5f;
+
+        List<SkillData> m_skillList = new List<SkillData>();
+
+        public BattleCharacter target { get { return m_target; } }
 
         protected override void Start()
         {
@@ -35,7 +44,6 @@ namespace KSW
 
             if (IsEquippedWeapon() == false)
             {
-                GameEvent.instance.OnEventNotice("무기가 없어 배틀모드로 진입할 수 없습니다",2f,true);
                 return;
             }
 
@@ -59,7 +67,7 @@ namespace KSW
             }
         }
 
-        bool IsEquippedWeapon()
+        public bool IsEquippedWeapon()
         {
             //TODO 임시로 Equipment로 검사합니다. Weapon 스크립트 작성 시에 수정 필요 
             if (m_equipment.IsEquipped(m_equipment.backJoint) ||
@@ -81,6 +89,57 @@ namespace KSW
         {
             Transform mainWeapon = m_equipment.mainWeapon;
             m_equipment.Equipped(m_equipment.backJoint, mainWeapon, true);
+        }
+
+        // =========================================================================
+        public void SetTarget(BattleCharacter target)
+        {
+            if (m_target == target)
+                return;
+            m_target = target;
+            OnChangeTarget();
+        }
+
+        // =========================================================================
+        void OnChangeTarget()
+        {
+
+        }
+
+        // =========================================================================
+        BattleCharacter FindTarget(List<Enemy>enemyList, bool bNewTarget)
+        {
+            IEnumerable<Enemy> result = from target in enemyList
+                                        where (bNewTarget ? target != m_target : target)
+                                        && Vector3.Distance(transform.position, target.transform.position) < m_detectionRange
+                                        && target.hp > 0
+                                        orderby Vector3.Distance(transform.position, target.transform.position) ascending
+                                        select target;
+
+            if (result.Count<Enemy>() == 0)
+                return null;    
+
+            return result.First<Enemy>();
+        }
+
+        // =========================================================================
+        public void MoveToTarget()
+        {
+            if (m_target == null)
+                return;
+
+            MoveTo(m_target.transform.position);
+        }
+
+        // =========================================================================
+        public void AddSkill(SkillData skill)
+        {
+            m_skillList.Add(skill);
+
+            if(m_skillList.Count < 4)
+            {
+                GameEvent.instance.OnEventBindSkill(skill);
+            }
         }
     }
 
