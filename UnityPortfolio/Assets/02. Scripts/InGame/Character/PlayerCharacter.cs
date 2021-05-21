@@ -37,6 +37,16 @@ namespace MyCore
             m_equipment = GetComponent<CharacterEquipment>();
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                PlaySkill(null);
+            }
+        }
+
         public void ChangeBattleMode(bool bBattle)
         {
             if (m_isBattleMode == bBattle)
@@ -140,6 +150,15 @@ namespace MyCore
             {
                 GameEvent.instance.OnEventBindSkill(skill);
             }
+        }
+
+        // =========================================================================
+        public void PlaySkill(SkillData skillData)
+        {
+            if (m_isBattleMode == false)
+                return;
+
+            m_animator.Play(skillData.Name, 1);
         }
     }
 
