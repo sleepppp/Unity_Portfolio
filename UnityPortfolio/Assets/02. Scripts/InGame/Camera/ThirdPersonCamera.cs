@@ -94,6 +94,14 @@ namespace MyCore
             m_yawValue = value.YawValue;
         }
         // =========================================================================
+        public void InterpolateValues(string path, float time, Action notifyEndInterpolate = null)
+        {
+            CameraScriptableObject data = Resources.Load(path) as CameraScriptableObject;
+
+            InterpolateValues(data, time, notifyEndInterpolate);
+        }
+
+        // =========================================================================
         public void InterpolateValues(CameraScriptableObject taragetValue, float time, Action notifyEndInterpolate = null)
         {
             if(m_coroutineInterpoltate == null)

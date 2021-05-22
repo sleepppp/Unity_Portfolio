@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace MyCore
 {
-    public class UINavigation : MonobehaviourSingleton<UINavigation>
+    public class UIController : MonobehaviourSingleton<UIController>
     {
         Stack<UIView> m_history = new Stack<UIView>();
         Canvas m_mainCanvas;

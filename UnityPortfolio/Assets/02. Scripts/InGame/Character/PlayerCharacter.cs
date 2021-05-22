@@ -19,8 +19,6 @@ namespace MyCore
 
         [SerializeField] float m_detectionRange = 5f;
 
-        List<SkillData> m_skillList = new List<SkillData>();
-
         public BattleCharacter target { get { return m_target; } }
 
         protected override void Start()
@@ -141,24 +139,14 @@ namespace MyCore
             MoveTo(m_target.transform.position);
         }
 
-        // =========================================================================
-        public void AddSkill(SkillData skill)
+        public override void AddSkill(SkillBase skill)
         {
-            m_skillList.Add(skill);
+            base.AddSkill(skill);
 
-            if(m_skillList.Count < 4)
+            if (m_skillList.Count < 4)
             {
                 GameEvent.instance.OnEventBindSkill(skill);
             }
-        }
-
-        // =========================================================================
-        public void PlaySkill(SkillData skillData)
-        {
-            if (m_isBattleMode == false)
-                return;
-
-            m_animator.Play(skillData.Name, 1);
         }
     }
 

@@ -22,7 +22,7 @@ namespace MyCore
             GameEvent.instance.EventBindSkill -= OnEventBindSkill;
         }
 
-        void OnEventBindSkill(SkillData skill)
+        void OnEventBindSkill(SkillBase skill)
         {
             SkillSlot slot = GetEmptySlot();
             if(slot == null)

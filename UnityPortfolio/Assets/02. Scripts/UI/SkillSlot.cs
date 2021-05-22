@@ -11,7 +11,7 @@ namespace MyCore
         Image m_coolTimeImage;
         Image m_rockedImage;
 
-        SkillData m_skillData;
+        SkillBase m_skill;
 
         protected override void Start()
         {
@@ -22,15 +22,15 @@ namespace MyCore
 
         public bool IsEmpty()
         {
-            return m_skillData == null;
+            return m_skill == null;
         }
 
-        public void BindSkill(SkillData skill)
+        public void BindSkill(SkillBase skill)
         {
-            m_skillData = skill;
+            m_skill = skill;
             m_rockedImage.enabled = false;
             m_coolTimeImage.fillAmount = 0f;
-            Sprite texture = Resources.Load<Sprite>(skill.SpritePath);
+            Sprite texture = Resources.Load<Sprite>(m_skill.skillData.SpritePath);
             m_iconImage.sprite = texture;
             m_iconImage.gameObject.SetActive(true);
         }

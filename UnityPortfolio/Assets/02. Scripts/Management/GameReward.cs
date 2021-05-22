@@ -22,7 +22,7 @@ namespace MyCore
 
             SkillData skill = GameData.instance.skillData[1];
             PlayerCharacter character = GameManager.instance.gameMode.playerObject ;
-            character.AddSkill(skill);
+            SkillSet.BindSKill(character, skill);
 
             GameEvent.instance.OnEventNotice("Default Attck Skill을 손에 넣었다", 2f, false);
         }

@@ -44,7 +44,7 @@ namespace MyCore
 
         public event Action<Enemy> EventDeadEnemy;
 
-        public event Action<SkillData> EventBindSkill;
+        public event Action<SkillBase> EventBindSkill;
 
         public event Func<bool> EventPlayAutoPlay;
         public event Action EventStopAutoPlay;
@@ -166,7 +166,7 @@ namespace MyCore
             EventDeadEnemy?.Invoke(enemy);
         }
 
-        public void OnEventBindSkill(SkillData data)
+        public void OnEventBindSkill(SkillBase data)
         {
             EventBindSkill?.Invoke(data);
         }

@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[TSVReader.Data("Name")]
+[TSVReader.Data("ID")]
 public class TestData
 {
+    public int ID;
     public string Name;
     public int MaxHP;
     public int MaxMP;

@@ -7,7 +7,7 @@ namespace MyCore
 {
     public class GameData : Singleton<GameData>
     {
-        List<DialogData> m_dialogDatas;
+        List<DialogData> m_dialogData;
         Dictionary<int,QuestData> m_questData;
         Dictionary<int, SkillData> m_skillData;
 
@@ -24,7 +24,7 @@ namespace MyCore
         void LoadDialogData()
         {
             Table table = TSVReader.Reader.ReadTSVToTable("Data/DialogTable");
-            m_dialogDatas = table.TableToList<DialogData>();
+            m_dialogData = table.TableToList<DialogData>();
         }
 
         void LoadQuestData()
@@ -41,12 +41,12 @@ namespace MyCore
 
         public DialogData GetDialogDataInID(int id)
         {
-            if (m_dialogDatas == null)
+            if (m_dialogData == null)
                 return null;
-            if (m_dialogDatas.Count <= id || id < 0)
+            if (m_dialogData.Count <= id || id < 0)
                 return null;
 
-            return m_dialogDatas[id];
+            return m_dialogData[id];
         }
     }
 }

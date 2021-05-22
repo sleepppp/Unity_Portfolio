@@ -29,7 +29,7 @@ namespace MyCore
 
         void OnButtonUp()
         {
-            UIView uiView = UINavigation.instance.Push("PopupMailDetail");
+            UIView uiView = UIController.instance.Push("PopupMailDetail");
             PopupMailDetail detail = uiView as PopupMailDetail;
             detail.Init(m_info);
         }

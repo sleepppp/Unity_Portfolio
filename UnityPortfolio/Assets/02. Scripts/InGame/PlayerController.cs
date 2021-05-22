@@ -16,6 +16,7 @@ namespace MyCore
 
         protected virtual void OnEnable()
         {
+            UnBindInput();  //안정성 처리
             BindInput();
         }
 

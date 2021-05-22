@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace MyCore
 {
-    //카메라 위치 데이터 값 담을 리소스
     public class CameraScriptableObject : ScriptableObject
     {
         public float Distance;

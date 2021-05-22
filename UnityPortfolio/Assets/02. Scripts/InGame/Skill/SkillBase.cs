@@ -4,43 +4,48 @@ using UnityEngine;
 
 namespace MyCore
 {
-    public abstract class SkillBase
+    public class SkillBase
     {
-        public enum State
-        {
-            StandBy,
-            Execute,
-            CoolTime
-        }
-
-        protected SkillData m_skillData;
+        protected bool m_isCoolDown;
+        protected BattleCharacter m_playerCharacter;
+        protected SkillData m_data;
         protected float m_coolTimer;
-        protected State m_state;
-        protected PlayerCharacter m_character;
 
-        public SkillBase(PlayerCharacter character, SkillData data)
+        public bool isCoolDown { get { return m_isCoolDown; } }
+        public float coonTimer { get { return m_coolTimer; } }
+        public SkillData skillData { get { return m_data; } }
+
+        public void Init(BattleCharacter character , SkillData data)
         {
-            m_character = character;
-            m_skillData = data;
-            m_state = State.StandBy;
+            m_data = data;
+            m_isCoolDown = false;
+            m_playerCharacter = character;
         }
-        public abstract void Update();
-        public abstract void Play();
+
+        public void Update()
+        {
+            if(m_isCoolDown)
+            {
+                m_coolTimer += Time.deltaTime;
+                if(m_coolTimer >= m_data.CoolTime)
+                {
+                    m_isCoolDown = false;
+                }
+            }
+        }
+
+        public virtual void Play()
+        {
+            if (m_isCoolDown == true)
+                return;
+
+            m_isCoolDown = true;
+            m_coolTimer = 0f;
+        }
     }
 
-    public class DefaultSkill : SkillBase
+    public class DefaultAttack : SkillBase  
     {
-        public DefaultSkill(PlayerCharacter character, SkillData data)
-            : base(character, data) { }
 
-        public override void Update()
-        {
-        }
-
-        public override void Play()
-        {
-            m_character.PlaySkill(m_skillData);
-            m_state = State.Execute;
-        }
     }
 }

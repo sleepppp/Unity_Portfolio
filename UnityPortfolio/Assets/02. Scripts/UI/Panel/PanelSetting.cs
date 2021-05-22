@@ -38,7 +38,7 @@ namespace MyCore
         void OnEventButtonDownMail()
         {
             m_mailRedDotImage.gameObject.SetActive(false);
-            UINavigation.instance.Push("PopupMail");
+            UIController.instance.Push("PopupMail");
         }
 
         void OnEventArriveMail(MailInfo mailInfo)

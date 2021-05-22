@@ -33,7 +33,7 @@ namespace MyCore
 
         void OnExit()
         {
-            UINavigation.instance.Pop();
+            UIController.instance.Pop();
         }
     }
 }

@@ -28,9 +28,11 @@ namespace MyCore
             //퀘스트 상태 확인. 이곳에서 현재 실행할 퀘스트와 완료된 퀘스트를 구분합니다 
             //CheckQuestState();
 
-            QuestBase testQuest;
-            m_questList.TryGetValue(1, out testQuest);
-            StartQuest(testQuest);
+            //TODO 우선 퀘스트 전부 발행합니다
+            foreach(KeyValuePair<int,QuestBase> item in m_questList)
+            {
+                StartQuest(item.Value);
+            }
         }
 
         private void Update()

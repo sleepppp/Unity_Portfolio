@@ -13,5 +13,7 @@ namespace MyCore
         public string SpritePath;
         public float CoolTime;
         public float AttackRange;
+        public int SkillDamage;
+        public string MontageName;
     }
 }

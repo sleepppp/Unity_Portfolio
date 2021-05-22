@@ -10,17 +10,12 @@ namespace MyCore
     {
         // =========================================================================
         protected static readonly int _animHashMainState = Animator.StringToHash("MainState");
-        static readonly int _animHashSkill0 = Animator.StringToHash("Skill0");
-        static readonly int _animHashSkill1 = Animator.StringToHash("Skill1");
-        static readonly int _animHashSkill2 = Animator.StringToHash("Skill2");
         // =========================================================================
         public enum State : int
         {
             Idle = 0,
             Move = 1,
-            Skill0 = 2,
-            Skill1 = 3,
-            Skill2 = 4
+            Skill = 2
         }
 
         public enum MoveType : int
@@ -54,8 +49,8 @@ namespace MyCore
             m_state = State.Idle;
             m_navMeshAgent.speed = m_moveSpeed;
             m_navMeshAgent.enabled = false;
-
-            GameEvent.instance.OnEventCreateHUD(this, m_hudPoint);
+            if(m_hudPoint)
+                GameEvent.instance.OnEventCreateHUD(this, m_hudPoint);
         }
         // =========================================================================
         protected virtual void Update()
@@ -108,19 +103,6 @@ namespace MyCore
 
             m_state = state;
             SetAnimMainState((int)m_state);
-
-            switch(m_state)
-            {
-                case State.Skill0:
-                    m_animator.SetTrigger(_animHashSkill0);
-                    break;
-                case State.Skill1:
-                    m_animator.SetTrigger(_animHashSkill1);
-                    break;
-                case State.Skill2:
-                    m_animator.SetTrigger(_animHashSkill2);
-                    break;
-            }
         }
         // =========================================================================
         void SetAnimMainState(int state)
@@ -170,9 +152,18 @@ namespace MyCore
         // =========================================================================
         public void OnAnimEventSkillEnd()
         {
-            m_animator.ResetTrigger(_animHashSkill0);
-            m_animator.ResetTrigger(_animHashSkill1);
-            m_animator.ResetTrigger(_animHashSkill2);
+            //m_animator.ResetTrigger(_animHashSkill0);
+            //m_animator.ResetTrigger(_animHashSkill1);
+            //m_animator.ResetTrigger(_animHashSkill2);
+        }
+
+        // =========================================================================
+        public void PlaySkill(SkillData skill)
+        {
+            if (m_state == State.Skill)
+                return;
+            ChangeState(State.Skill);
+            m_animator.Play(skill.MontageName,1);
         }
     }
 }
