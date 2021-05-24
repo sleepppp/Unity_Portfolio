@@ -57,6 +57,15 @@ namespace MyCore
 
             m_isBattleMode = bBattle;
             m_animator.SetBool(_animHashIsBattleMode, m_isBattleMode);
+
+            if(m_isBattleMode)
+            {
+                SetTarget(FindTarget(true));
+            }
+            else
+            {
+                SetTarget(null);
+            }
         }
 
         void OnAnimStateEnter(AnimatorStateInfo stateInfo, int layer)
@@ -104,15 +113,16 @@ namespace MyCore
         {
             if (m_target == target)
                 return;
+            GameManager.instance.gameMode.SelectTarget(target, m_target);
             m_target = target;
-            OnChangeTarget();
         }
 
         // =========================================================================
-        void OnChangeTarget()
+        BattleCharacter FindTarget(bool bNewTarget)
         {
-
+            return FindTarget(GameManager.instance.gameMode.enemyList, bNewTarget);
         }
+
 
         // =========================================================================
         BattleCharacter FindTarget(List<Enemy>enemyList, bool bNewTarget)

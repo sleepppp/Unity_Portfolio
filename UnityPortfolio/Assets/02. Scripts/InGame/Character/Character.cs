@@ -49,8 +49,9 @@ namespace MyCore
             m_state = State.Idle;
             m_navMeshAgent.speed = m_moveSpeed;
             m_navMeshAgent.enabled = false;
-            if(m_hudPoint)
-                GameEvent.instance.OnEventCreateHUD(this, m_hudPoint);
+
+            if (m_hudPoint)
+                CreateHUD();
         }
         // =========================================================================
         protected virtual void Update()
@@ -150,20 +151,18 @@ namespace MyCore
         }
 
         // =========================================================================
-        public void OnAnimEventSkillEnd()
-        {
-            //m_animator.ResetTrigger(_animHashSkill0);
-            //m_animator.ResetTrigger(_animHashSkill1);
-            //m_animator.ResetTrigger(_animHashSkill2);
-        }
-
-        // =========================================================================
         public void PlaySkill(SkillData skill)
         {
             if (m_state == State.Skill)
                 return;
             ChangeState(State.Skill);
             m_animator.Play(skill.MontageName,1);
+        }
+
+        // =========================================================================
+        protected virtual void CreateHUD()
+        {
+            GameEvent.instance.OnEventCreateHUD(this, m_hudPoint, Color.white);
         }
     }
 }

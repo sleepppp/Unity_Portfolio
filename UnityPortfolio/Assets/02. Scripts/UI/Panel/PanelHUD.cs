@@ -30,7 +30,7 @@ namespace MyCore
             GameEvent.instance.EventHideHUD -= OnEventHideHUD;
         }
 
-        void OnEventCreateHUD(Character character,Transform hudPoint)
+        void OnEventCreateHUD(Character character,Transform hudPoint,Color color)
         {
             if (IsAlreadyCreate(character))
                 return;
@@ -41,7 +41,7 @@ namespace MyCore
 
             GameObject newObject = Instantiate(m_prefabHUD, transform);
             HUD hud = newObject.GetComponent<HUD>();
-            hud.Init(info);
+            hud.Init(info,color);
 
             m_hudList.Add(hud);
         }

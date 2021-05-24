@@ -22,7 +22,7 @@ namespace MyCore
         public event Action<float> EventFadeOut;
         public event Action<float> EventFadeIn;
 
-        public event Action<Character, Transform> EventCreateHUD;
+        public event Action<Character, Transform,Color> EventCreateHUD;
         public event Action<Character> EventRemoveHUD;
 
         public event Action<Character, Transform,Action<InteractionHUD>> EventCreateInteractionHUD;
@@ -89,9 +89,9 @@ namespace MyCore
             EventFadeIn?.Invoke(time);
         }
 
-        public void OnEventCreateHUD(Character character,Transform hudPoint)
+        public void OnEventCreateHUD(Character character,Transform hudPoint, Color color)
         {
-            EventCreateHUD?.Invoke(character, hudPoint);
+            EventCreateHUD?.Invoke(character, hudPoint,color);
         }
 
         public void  OnEventRemoveHUD(Character character)

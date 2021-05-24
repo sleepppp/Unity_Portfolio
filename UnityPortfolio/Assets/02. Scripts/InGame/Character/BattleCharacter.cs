@@ -47,5 +47,10 @@ namespace MyCore
         {
             m_skillList.Add(skill);
         }
+
+        public void OnAnimEventSkillEnd()
+        {
+            ChangeState(State.Idle);
+        }
     }
 }

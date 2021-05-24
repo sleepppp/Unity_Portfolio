@@ -12,5 +12,10 @@ namespace MyCore
 
             GameEvent.instance.OnEventDeadEnemy(this);
         }
+
+        protected override void CreateHUD()
+        {
+            GameEvent.instance.OnEventCreateHUD(this, m_hudPoint, Color.red);
+        }
     }
 }
