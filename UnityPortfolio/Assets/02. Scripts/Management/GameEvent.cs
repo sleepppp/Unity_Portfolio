@@ -49,6 +49,11 @@ namespace MyCore
         public event Func<bool> EventPlayAutoPlay;
         public event Action EventStopAutoPlay;
 
+        public event Action<SkillBase> EventPlaySkill;
+        public event Action<SkillBase> EventSkillCoolUpdate;
+
+        public event Action<DamageTextInfo> EventPlayDamageText;
+
         public void OnEventStartStickDrag(Vector2 dir, float value)
         {
             EventStartStickDrag?.Invoke(dir, value);
@@ -169,6 +174,20 @@ namespace MyCore
         public void OnEventBindSkill(SkillBase data)
         {
             EventBindSkill?.Invoke(data);
+        }
+        public void OnEventPlaySkill(SkillBase skill)
+        {
+            EventPlaySkill?.Invoke(skill);
+        }
+
+        public void OnEventSkillCoolUpdate(SkillBase skill)
+        {
+            EventSkillCoolUpdate?.Invoke(skill);
+        }
+
+        public void OnEventPlayDamageText(DamageTextInfo info)
+        {
+            EventPlayDamageText?.Invoke(info);
         }
     }
 }

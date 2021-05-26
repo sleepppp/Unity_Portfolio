@@ -12,7 +12,7 @@ namespace MyCore
         static readonly string _changeToNoneBattleMode = "ChangeToNoneBattleMode";
 
         protected bool m_isBattleMode;
-
+        protected bool m_isChangingBattleMode;
         CharacterEquipment m_equipment;
 
         BattleCharacter m_target;
@@ -39,9 +39,30 @@ namespace MyCore
         {
             base.Update();
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (m_isBattleMode && m_target)
             {
-                PlaySkill(null);
+                SkillBase skill = GetPerfectSkill();
+                if (skill != null)
+                {
+                    if (skill.isCoolDown == false)
+                    {
+                        if (Vector3.Distance(transform.position, m_target.transform.position) <= skill.skillData.AttackRange)
+                        {
+                            PlaySkill(skill);
+                        }
+                        else
+                        {
+                            if (IsMoveState() == false && m_isChangingBattleMode == false)
+                            {
+                                MoveToTarget();
+                            }
+                        }
+                    }
+                }
+                else if (m_target == null)
+                {
+                    SetTarget(FindTarget(false));
+                }
             }
         }
 
@@ -57,8 +78,9 @@ namespace MyCore
 
             m_isBattleMode = bBattle;
             m_animator.SetBool(_animHashIsBattleMode, m_isBattleMode);
+            m_isChangingBattleMode = true;
 
-            if(m_isBattleMode)
+            if (m_isBattleMode)
             {
                 SetTarget(FindTarget(true));
             }
@@ -73,6 +95,7 @@ namespace MyCore
             if(stateInfo.IsName(_changeToBattleMode) || stateInfo.IsName(_changeToNoneBattleMode))
             {
                 SetMovementStatic(true);
+                m_isChangingBattleMode = true;
             }
         }
 
@@ -81,6 +104,7 @@ namespace MyCore
             if (stateInfo.IsName(_changeToBattleMode) || stateInfo.IsName(_changeToNoneBattleMode))
             {
                 SetMovementStatic(false);
+                m_isChangingBattleMode = false;
             }
         }
 
@@ -109,12 +133,22 @@ namespace MyCore
         }
 
         // =========================================================================
+        public void OnAnimApplyDamage()
+        {
+            if (m_target == null || m_currentPlaySkill == null)
+                return;
+
+            m_target.ApplyDamage(m_currentPlaySkill.skillData.SkillDamage);
+        }
+
+        // =========================================================================
         public void SetTarget(BattleCharacter target)
         {
             if (m_target == target)
                 return;
             GameManager.instance.gameMode.SelectTarget(target, m_target);
             m_target = target;
+            MoveToTarget();
         }
 
         // =========================================================================
@@ -128,10 +162,9 @@ namespace MyCore
         BattleCharacter FindTarget(List<Enemy>enemyList, bool bNewTarget)
         {
             IEnumerable<Enemy> result = from target in enemyList
-                                        where (bNewTarget ? target != m_target : target)
-                                        && Vector3.Distance(transform.position, target.transform.position) < m_detectionRange
-                                        && target.hp > 0
-                                        orderby Vector3.Distance(transform.position, target.transform.position) ascending
+                                        where IsPerfectTarget(target, bNewTarget)
+                                        orderby Vector3.Distance(transform.position, 
+                                        target.transform.position) ascending
                                         select target;
 
             if (result.Count<Enemy>() == 0)
@@ -141,9 +174,19 @@ namespace MyCore
         }
 
         // =========================================================================
+        bool IsPerfectTarget(Enemy enemy, bool bNewTarget)
+        {
+            return (bNewTarget ? enemy != m_target : enemy)
+                && Vector3.Distance(transform.position, enemy.transform.position) < m_detectionRange
+                && enemy.hp > 0;
+        }
+
+        // =========================================================================
         public void MoveToTarget()
         {
             if (m_target == null)
+                return;
+            if (m_isChangingBattleMode)
                 return;
 
             MoveTo(m_target.transform.position);

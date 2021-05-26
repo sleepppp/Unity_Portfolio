@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 namespace MyCore
 {
     public class SkillSlot : UIBase
@@ -12,6 +12,8 @@ namespace MyCore
         Image m_rockedImage;
 
         SkillBase m_skill;
+
+        public SkillBase skillBase { get { return m_skill; } }
 
         protected override void Start()
         {
@@ -33,6 +35,14 @@ namespace MyCore
             Sprite texture = Resources.Load<Sprite>(m_skill.skillData.SpritePath);
             m_iconImage.sprite = texture;
             m_iconImage.gameObject.SetActive(true);
+        }
+
+        public void StartCoolDown()
+        {
+            m_coolTimeImage.DOKill();
+            m_coolTimeImage.fillAmount = 1f;
+            m_coolTimeImage.DOFillAmount(0f, m_skill.skillData.CoolTime);
+            Debug.Log("SkillSlot :: StartCoolDown");
         }
     }
 }

@@ -15,5 +15,7 @@ namespace MyCore
         public float AttackRange;
         public int SkillDamage;
         public string MontageName;
+        public string FXPrefabPath;
+        public float FXDelay;
     }
 }

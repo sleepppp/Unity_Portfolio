@@ -104,6 +104,19 @@ namespace MyCore
 
             m_state = state;
             SetAnimMainState((int)m_state);
+
+            switch(m_state)
+            {
+                case State.Idle:
+                case State.Move:
+                    SetMovementStatic(false);
+                    break;
+                case State.Skill:
+                    SetMovementStatic(true);
+                    break;
+            }
+
+            Debug.Log("ChangeState : " + m_state);
         }
         // =========================================================================
         void SetAnimMainState(int state)
@@ -121,7 +134,11 @@ namespace MyCore
             switch(m_moveType)
             {
                 case MoveType.None:
-                   
+                    if (m_navMeshAgent.enabled == true)
+                    {
+                        m_navMeshAgent.isStopped = true;
+                        m_navMeshAgent.enabled = false;
+                    }
                     break;
                 case MoveType.Rigidbody:
                     if (m_navMeshAgent.enabled == true)
@@ -139,7 +156,7 @@ namespace MyCore
             }
         }
         // =========================================================================
-        bool IsMoveState()
+        protected bool IsMoveState()
         {
             if (m_state != State.Move)
                 return false;
