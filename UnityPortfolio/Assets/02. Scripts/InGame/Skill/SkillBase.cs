@@ -27,6 +27,7 @@ namespace MyCore
             if(m_isCoolDown)
             {
                 m_coolTimer += Time.deltaTime;
+
                 if(m_coolTimer >= m_data.CoolTime)
                 {
                     m_isCoolDown = false;
@@ -38,9 +39,10 @@ namespace MyCore
         {
             if (m_isCoolDown == true)
                 return;
-
             m_isCoolDown = true;
             m_coolTimer = 0f;
+            m_playerCharacter.PlaySkillAnim(m_data.MontageName);
+            GameEvent.instance.OnEventPlaySkill(this);
         }
     }
 

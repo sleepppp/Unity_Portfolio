@@ -66,5 +66,19 @@ namespace MyCore
         {
             m_enemyList.Remove(enemy);
         }
+
+        public void SelectTarget(BattleCharacter currentTarget, BattleCharacter prevTarget)
+        {
+            if(prevTarget)
+            {
+                prevTarget.GetComponent<OutlinedObject>().enabled = false;
+            }
+            if(currentTarget)
+            {
+                currentTarget.GetComponent<OutlinedObject>().enabled = true;
+            }
+
+            //TODO TargetRing 처리는 이곳에서
+        }
     }
 }

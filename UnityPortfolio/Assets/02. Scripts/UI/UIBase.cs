@@ -14,17 +14,31 @@ namespace MyCore
 
         protected virtual void Start()
         {
+            InitComponent();
+        }
+
+        public void InitComponent()
+        {
             m_myCanvas = transform.FindComponentByParent<Canvas>();
             m_uiCamera = m_myCanvas.worldCamera;
             m_rectTransform = transform as RectTransform;
         }
 
         //Camera overlay Canvas를 사용할 경우 컴포넌트 들은 해당 함수를 통해 좌표를 변경해서 사용해야 합니다. 
-        protected Vector3 TransformScreenPointInCameraCanvas(Vector2 screenPoint,RectTransform transform)
+
+        protected Vector3 ScreenPointToWorldPointInRectangle(Vector2 screenPoint,RectTransform transform)
         {
             Vector3 result;
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(transform, screenPoint, m_uiCamera, out result);
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(transform, screenPoint,
+                m_uiCamera, out result);
             return result;
+        }
+
+        protected Vector3 WorldPointToScreenPointInCameraCanvas(Vector3 worldPosition,
+            RectTransform transform)
+        {
+            Vector3 screenPoint = Camera.main.WorldToScreenPoint(worldPosition);
+            return ScreenPointToWorldPointInRectangle(screenPoint, transform);
         }
     }
 }

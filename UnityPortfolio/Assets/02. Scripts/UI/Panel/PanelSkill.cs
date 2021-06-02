@@ -15,11 +15,24 @@ namespace MyCore
             m_slotList = GetComponentsInChildren<SkillSlot>();
 
             GameEvent.instance.EventBindSkill += OnEventBindSkill;
+            GameEvent.instance.EventPlaySkill += OnEventPlaySkill;
         }
 
         private void OnDestroy()
         {
             GameEvent.instance.EventBindSkill -= OnEventBindSkill;
+            GameEvent.instance.EventPlaySkill -= OnEventPlaySkill;
+        }
+
+        void OnEventPlaySkill(SkillBase skill)
+        {
+            for(int i =0; i < m_slotList.Length; ++i)
+            {
+                if(m_slotList[i].skillBase == skill)
+                {
+                    m_slotList[i].StartCoolDown();
+                }
+            }
         }
 
         void OnEventBindSkill(SkillBase skill)

@@ -1,2 +1,2 @@
-ID	Name	ClassName	SpritePath	CoolTime	AttackRange	SkillDamage	MontageName
-1	DefaultAttack	DefaultAttack	UISource/SkillIcon/1-Battle-Roar	1	1	10	DefaultAttack
+ID	Name	ClassName	SpritePath	CoolTime	AttackRange	SkillDamage	MontageName	FXPrefabPath	FXDelay
+1	DefaultAttack	DefaultAttack	UISource/SkillIcon/1-Battle-Roar	1	1	10	DefaultSkill	Prefabs/FX/SworldSlash1	0.3

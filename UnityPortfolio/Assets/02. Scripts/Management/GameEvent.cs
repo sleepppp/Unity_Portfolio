@@ -22,7 +22,7 @@ namespace MyCore
         public event Action<float> EventFadeOut;
         public event Action<float> EventFadeIn;
 
-        public event Action<Character, Transform> EventCreateHUD;
+        public event Action<Character, Transform,Color> EventCreateHUD;
         public event Action<Character> EventRemoveHUD;
 
         public event Action<Character, Transform,Action<InteractionHUD>> EventCreateInteractionHUD;
@@ -48,6 +48,11 @@ namespace MyCore
 
         public event Func<bool> EventPlayAutoPlay;
         public event Action EventStopAutoPlay;
+
+        public event Action<SkillBase> EventPlaySkill;
+        public event Action<SkillBase> EventSkillCoolUpdate;
+
+        public event Action<DamageTextInfo> EventPlayDamageText;
 
         public void OnEventStartStickDrag(Vector2 dir, float value)
         {
@@ -89,9 +94,9 @@ namespace MyCore
             EventFadeIn?.Invoke(time);
         }
 
-        public void OnEventCreateHUD(Character character,Transform hudPoint)
+        public void OnEventCreateHUD(Character character,Transform hudPoint, Color color)
         {
-            EventCreateHUD?.Invoke(character, hudPoint);
+            EventCreateHUD?.Invoke(character, hudPoint,color);
         }
 
         public void  OnEventRemoveHUD(Character character)
@@ -169,6 +174,20 @@ namespace MyCore
         public void OnEventBindSkill(SkillBase data)
         {
             EventBindSkill?.Invoke(data);
+        }
+        public void OnEventPlaySkill(SkillBase skill)
+        {
+            EventPlaySkill?.Invoke(skill);
+        }
+
+        public void OnEventSkillCoolUpdate(SkillBase skill)
+        {
+            EventSkillCoolUpdate?.Invoke(skill);
+        }
+
+        public void OnEventPlayDamageText(DamageTextInfo info)
+        {
+            EventPlayDamageText?.Invoke(info);
         }
     }
 }

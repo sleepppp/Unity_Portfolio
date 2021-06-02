@@ -48,7 +48,7 @@ namespace MyCore
 
         void SetStickPosition(Vector3 position)
         {
-            Vector3 point = TransformScreenPointInCameraCanvas(position, m_stickImage.rectTransform);
+            Vector3 point = ScreenPointToWorldPointInRectangle(position, m_stickImage.rectTransform);
 
             Vector3 dir = point - m_origin.position;
             float distance = dir.magnitude;

@@ -34,7 +34,7 @@ namespace MyCore
         {
             Vector3 worldPoint = m_hudInfo.TargetHUDPoint.position;
             Vector3 screenPoint = GameManager.instance.gameMode.mainCamera.WorldToScreenPoint(worldPoint);
-            Vector3 finalPoint = TransformScreenPointInCameraCanvas(screenPoint, m_rectTransform);
+            Vector3 finalPoint = ScreenPointToWorldPointInRectangle(screenPoint, m_rectTransform);
             m_rectTransform.position = finalPoint;
         }
 

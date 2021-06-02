@@ -49,8 +49,9 @@ namespace MyCore
             m_state = State.Idle;
             m_navMeshAgent.speed = m_moveSpeed;
             m_navMeshAgent.enabled = false;
-            if(m_hudPoint)
-                GameEvent.instance.OnEventCreateHUD(this, m_hudPoint);
+
+            if (m_hudPoint)
+                CreateHUD();
         }
         // =========================================================================
         protected virtual void Update()
@@ -103,6 +104,19 @@ namespace MyCore
 
             m_state = state;
             SetAnimMainState((int)m_state);
+
+            switch(m_state)
+            {
+                case State.Idle:
+                case State.Move:
+                    SetMovementStatic(false);
+                    break;
+                case State.Skill:
+                    SetMovementStatic(true);
+                    break;
+            }
+
+            Debug.Log("ChangeState : " + m_state);
         }
         // =========================================================================
         void SetAnimMainState(int state)
@@ -120,7 +134,11 @@ namespace MyCore
             switch(m_moveType)
             {
                 case MoveType.None:
-                   
+                    if (m_navMeshAgent.enabled == true)
+                    {
+                        m_navMeshAgent.isStopped = true;
+                        m_navMeshAgent.enabled = false;
+                    }
                     break;
                 case MoveType.Rigidbody:
                     if (m_navMeshAgent.enabled == true)
@@ -138,7 +156,7 @@ namespace MyCore
             }
         }
         // =========================================================================
-        bool IsMoveState()
+        protected bool IsMoveState()
         {
             if (m_state != State.Move)
                 return false;
@@ -150,20 +168,18 @@ namespace MyCore
         }
 
         // =========================================================================
-        public void OnAnimEventSkillEnd()
-        {
-            //m_animator.ResetTrigger(_animHashSkill0);
-            //m_animator.ResetTrigger(_animHashSkill1);
-            //m_animator.ResetTrigger(_animHashSkill2);
-        }
-
-        // =========================================================================
         public void PlaySkill(SkillData skill)
         {
             if (m_state == State.Skill)
                 return;
             ChangeState(State.Skill);
             m_animator.Play(skill.MontageName,1);
+        }
+
+        // =========================================================================
+        protected virtual void CreateHUD()
+        {
+            GameEvent.instance.OnEventCreateHUD(this, m_hudPoint, Color.white);
         }
     }
 }
