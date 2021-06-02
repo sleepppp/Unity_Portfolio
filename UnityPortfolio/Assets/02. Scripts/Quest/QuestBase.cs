@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using MyCore.Data;
 namespace MyCore
 {
-    [TSVReader.Data("ID")]
-    public class QuestData
-    {
-        public int ID;
-        public string Name;
-        public string Description;
-        public float LimitTime;
-        public int NextID;
-        public string ClassName;
-    }
-
     public abstract class QuestBase
     {
         public event Action<QuestBase> EventQuestClear;

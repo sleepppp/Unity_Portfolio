@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using MyCore.Data;
 namespace MyCore
 {
     public struct DialogStruct

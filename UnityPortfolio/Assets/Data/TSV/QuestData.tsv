@@ -1,0 +1,2 @@
+ID(int)	Name(string)	Description(string)	LimitTime(float)	NextID(int)	ClassName(string)
+1	First Talk	First Talk With Rin	0	2	QuestFirstTalkWithRin

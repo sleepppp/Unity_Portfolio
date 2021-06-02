@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using MyCore.Data;
 namespace MyCore
 {
     [RequireComponent(typeof(Rigidbody),typeof(NavMeshAgent),typeof(Animator))]

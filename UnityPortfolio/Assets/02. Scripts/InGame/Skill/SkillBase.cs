@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MyCore.Data;
 namespace MyCore
 {
     public class SkillBase

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
-
+using MyCore.Data;
 namespace MyCore
 {
     public class SkillSet

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using MyCore.Data;
 namespace MyCore
 {
     public class ThirdPersonCamera : MonoBehaviour
