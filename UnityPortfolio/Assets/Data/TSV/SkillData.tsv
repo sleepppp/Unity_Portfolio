@@ -1,2 +1,2 @@
 ID(int)	Name(string)	ClassName(string)	SpritePath(string)	CoolTime(float)	AttackRange(float)	SkillDamage(int)	MontageName(string)	FXPrefabPath(string)	FXDelay(float)
-1	DefaultAttack	DefaultAttack	UISource/SkillIcon/1-Battle-Roar	1	1	10	DefaultSkill	Prefabs/SworldSlash1	0.3
+1	DefaultAttack	DefaultAttack	UISource/SkillIcon/1-Battle-Roar	1	1	10	DefaultSkill	Prefabs/FX/SworldSlash1	0.3

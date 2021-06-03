@@ -12,7 +12,8 @@ namespace MyCore
 
         private void Awake()
         {
-            SceneManager.LoadScene(m_loadSceneName, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(m_loadSceneName, LoadSceneMode.Additive);
+
             GameManager gameManager = GameManager.instance;     //강제 생성
         }
     }

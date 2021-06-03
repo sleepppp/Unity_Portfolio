@@ -3387,7 +3387,7 @@ MonoBehaviour:
   m_moveSpeed: 0
   m_rotateSpeed: 0
   m_name: Rin
-  m_dialogID: 000000000100000002000000
+  m_dialogID: 010000000200000003000000
 --- !u!195 &943500231
 NavMeshAgent:
   m_ObjectHideFlags: 0

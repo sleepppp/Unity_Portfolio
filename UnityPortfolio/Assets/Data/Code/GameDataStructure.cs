@@ -7,7 +7,7 @@ using Core.Data;
 namespace MyCore.Data
 {
 	public class GameDataStructure
-	{
+    {
 		public string DialogDataPath = "Assets/Data/TSV/DialogData.tsv";
 		public Dictionary<int,DialogData> DialogData;
 
