@@ -169,7 +169,7 @@ namespace Core.Data
             }
             //{{ InNameSpace ~
             {
-                generator.Class("GameData");
+                generator.Class("GameDataStructure");
                 generator.StartBlock();
                 // {{ InClass ~
                 {
@@ -193,7 +193,7 @@ namespace Core.Data
                         generator.EndLine();
                     }
 
-                    generator.StartConstructor("GameData");
+                    generator.StartConstructor("GameDataStructure");
                     {
                         for (int i = 0; i < loadInfo.Count; ++i)
                         {

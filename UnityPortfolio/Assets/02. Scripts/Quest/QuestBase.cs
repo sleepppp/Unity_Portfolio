@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using MyCore.Data;
+
+namespace MyCore.Data
+{
+    public enum QuestType : int
+    {
+        None = 0,
+        killMonster = 1,
+        CommunicationWithNPC = 2,
+    }
+}
+
 namespace MyCore
 {
     public abstract class QuestBase
     {
-        public event Action<QuestBase> EventQuestClear;
-
         protected QuestData m_data;
         protected bool m_isFail;
         protected bool m_isSucceeded;
